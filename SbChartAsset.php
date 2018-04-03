@@ -9,7 +9,7 @@ use yii\web\AssetBundle;
  */
 class SbChartAsset extends AssetBundle {
 
-    public $sourcePath = '@themes/sb-admin';
+    public $sourcePath = __DIR__ . 'sb-admin';
     public $css = [];
     public $js = [
         'vendor/chart.js/Chart.min.js',

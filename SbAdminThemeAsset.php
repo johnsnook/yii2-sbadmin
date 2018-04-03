@@ -9,7 +9,7 @@ use yii\web\AssetBundle;
  */
 class SbAdminThemeAsset extends AssetBundle {
 
-    public $sourcePath = 'sb-admin';
+    public $sourcePath = __DIR__ . '/sb-admin';
     public $css = [
         'css/sb-admin' . (YII_ENV_DEV ? '' : '.min') . '.css',
     ];
