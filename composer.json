@@ -1,0 +1,21 @@
+{
+    "name": "johnsnook/yii2-sbadmin2",
+    "description": "A Bootstrap 4 admin template theme for Yii2",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension","bootstrap","admin","template","modular","php","theme","html5","jquery","sbadmin2","bootstrap4"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "John Michael Snook",
+            "email": "jsnook@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "johnsnook\\sbadmin2\\": ""
+        }
+    }
+}
