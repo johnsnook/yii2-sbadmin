@@ -9,7 +9,7 @@ use yii\web\AssetBundle;
  */
 class SbDatatablesAsset extends AssetBundle {
 
-    public $sourcePath = '@themes/sb-admin';
+    public $sourcePath = 'sb-admin';
     public $css = [
         'vendor/datatables/dataTables.bootstrap4.css'
     ];
