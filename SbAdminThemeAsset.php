@@ -24,6 +24,7 @@ class SbAdminThemeAsset extends AssetBundle {
     public $depends = [
         'yii\web\JqueryAsset',
         'yii\bootstrap\BootstrapAsset',
+        'johnsnook\sbadmin\SbFasAsset'
             #'rmrevin\yii\fontawesome\AssetBundle',
     ];
     public $publishOptions = ['forceCopy' => YII_ENV_DEV ? true : false];
