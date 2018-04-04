@@ -1,0 +1,70 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/*
+    Created on : Apr 3, 2018, 9:05:05 PM
+    Author     : John
+*/
+
+ul.navbar-sidenav li.nav-item > a[aria-expanded="false"].nav-link-collapse.nav-link > i.fa-angle-right
+{
+    float: right;
+    font-size: 18px;
+    line-height: initial;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    margin-right: 0;
+}
+ul.navbar-sidenav li.nav-item > a[aria-expanded="true"].nav-link-collapse.nav-link > i.fa-angle-right
+{
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+
+#mainNav .navbar-collapse .navbar-sidenav .nav-link-collapse:after {
+    float: right;
+    content: '';
+    font-family: '';
+}
+
+#mainNav .navbar-collapse .navbar-sidenav .nav-link-collapse.collapsed:after {
+    content: '';
+}
+
+#mainNav .navbar-collapse .navbar-nav > .nav-item.dropdown > .nav-link > i.fa-angle-right
+{
+    float: none;
+    font-size: 18px;
+    line-height: initial;
+    -webkit-transition: all 0.3s ease;
+    transition: all 0.3s ease;
+    margin-right: 0;
+}
+
+#mainNav .navbar-collapse .navbar-nav > .nav-item.dropdown.show > .nav-link > i.fa-angle-right
+{
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+
+#mainNav .navbar-collapse .navbar-nav > .nav-item.dropdown > .nav-link:after {
+    float:none;
+    content: initial;
+    border: none;
+    font-family: '';
+}
+
+#mainNav .navbar-collapse .navbar-nav > .nav-item.dropdown > .nav-link .indicator {
+    position: absolute;
+    top: 5px;
+    left: 21px;
+    font-size: 10px;
+}
+
+#mainNav .navbar-collapse .navbar-nav > .nav-item.dropdown.show > .nav-link:after {
+    content: initial;
+}

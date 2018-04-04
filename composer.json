@@ -13,7 +13,7 @@
     "require": {
         "yiisoft/yii2": "*",
         "yiisoft/yii2-bootstrap": "~2.1.0",
-        "rmrevin/yii2-fontawesome": "~3.0"
+        "rmrevin/yii2-fontawesome": "~2.7"
     },
     "autoload": {
         "psr-4": {
