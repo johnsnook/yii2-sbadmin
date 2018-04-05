@@ -35,8 +35,13 @@ yii bootstrap should be changed to the bootstrap 4 version
 Usage
 -----
 
-The layout files should be copied from vendor/johnsnook/layouts to backend/views/layouts where you can modify them to your hearts content.
+The layout files should be copied from @vendor/johnsnook/sbadmin/layouts to backend/views/layouts where you can modify them to your hearts content.
 
 Obviously in progress, I started work on 4/3/2018.
 
-# Halp
+To enable the example pages add this to your config/main.php at the top level
+```
+'controllerMap' => [
+        'sbadmin' => 'johnsnook\sbadmin\controllers\SbAdminController',
+],
+```

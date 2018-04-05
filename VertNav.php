@@ -19,6 +19,7 @@ use yii\helpers\ArrayHelper;
  */
 class VertNav extends \yii\bootstrap\Nav {
 
+    public $dropdownClass = 'common\components\Subnav';
     private static $autoId = 50;
     public static $iconClassPrefix = 'fa fa-';
     public $isSubNav = false;
@@ -55,22 +56,23 @@ class VertNav extends \yii\bootstrap\Nav {
         $item['label'] = ucwords($item['label']);
         $encodeLabel = isset($item['encode']) ? $item['encode'] : $this->encodeLabels;
         $label = $encodeLabel ? Html::encode($item['label']) : $item['label'];
-        $icon = Html::tag('i', '', ['class' => self::$iconClassPrefix . (isset($item['icon']) ? $item['icon'] : 'dot-circle')]) . '&nbsp;';
+        $icon = (isset($item['icon']) ? Html::tag('i', '', ['class' => self::$iconClassPrefix . $item['icon']]) . '&nbsp;' : '');
         $options = ArrayHelper::getValue($item, 'options', []);
         $items = ArrayHelper::getValue($item, 'items');
-        $url = ArrayHelper::getValue($item, 'url', '#');
+        $url = ArrayHelper::getValue($item, 'url', 'javascript:;');
         $linkOptions = ArrayHelper::getValue($item, 'linkOptions', []);
-        if (isset($linkOptions['aria-selected'])) {
-            $active = $linkOptions['aria-selected'];
+
+        if (isset($item['active'])) {
+            $active = ArrayHelper::remove($item, 'active', false);
         } else {
             $active = $this->isItemActive($item);
         }
 
         if (empty($items)) {
-            $arrow = '';
+            #$arrow = '';
             $items = '';
         } else {
-            $arrow = Html::tag('i', '', ['class' => 'fa fa-angle-right float-right']);
+            #$arrow = Html::tag('i', '', ['class' => 'fa fa-angle-right float-right']);
             $linkOptions['data-toggle'] = 'collapse';
             $linkOptions['aria-expanded'] = 'false';
             Html::addCssClass($linkOptions, ['widget' => 'nav-link-collapse collapsed']);
@@ -79,10 +81,11 @@ class VertNav extends \yii\bootstrap\Nav {
                 $id = 'collapse' . $this::$autoId++;
                 $url = $item['url'] = "#$id";
                 $linkOptions['aria-controls'] = $id;
-                $woptions = $this->options;
+                $woptions = ArrayHelper::merge($this->options, ArrayHelper::getValue($item, 'menuOptions', []));
                 $woptions['id'] = $id;
                 $woptions['data-parent'] = '#' . $this->options['id'];
-                $woptions['class'] = 'collapse';
+                //$woptions['class'] = 'collapse';
+                Html::addCssClass($woptions, ['collapse']);
                 $items = VertNav::widget([
                             'options' => $woptions,
                             'isSubNav' => true,
@@ -101,65 +104,7 @@ class VertNav extends \yii\bootstrap\Nav {
 
         $label = Html::tag('span', $label, ['class' => 'nav-link-text']);
 
-        return Html::tag('li', Html::a($icon . $label . $arrow, $url, $linkOptions) . $items, $options);
-    }
-
-    /**
-     * Check to see if a child item is active optionally activating the parent.
-     * @param array $items @see items
-     * @param boolean $active should the parent be active too
-     * @return array @see items
-     */
-    protected function isChildActive($items, &$active) {
-        foreach ($items as $i => $child) {
-            if ($this->isItemActive($child)) {
-                ArrayHelper::setValue($child, 'linkOptions', ['aria-selected' => true]);
-                if ($this->activateParents) {
-                    $active = true;
-                }
-            }
-        }
-        return $items;
-    }
-
-    /**
-     * Checks whether a menu item is active.
-     * This is done by checking if [[route]] and [[params]] match that specified in the `url` option of the menu item.
-     * When the `url` option of a menu item is specified in terms of an array, its first element is treated
-     * as the route for the item and the rest of the elements are the associated parameters.
-     * Only when its route and parameters match [[route]] and [[params]], respectively, will a menu item
-     * be considered active.
-     * @param array $item the menu item to be checked
-     * @return boolean whether the menu item is active
-     */
-    protected function isItemActive($item) {
-        if (!$this->activateItems) {
-            return false;
-        }
-        if (isset($item['url']) && is_array($item['url']) && isset($item['url'][0])) {
-            $route = $item['url'][0];
-            if ($route[0] !== '/' && Yii::$app->controller) {
-                $route = Yii::$app->controller->module->getUniqueId() . '/' . $route;
-            }
-            if (ltrim($route, '/') !== $this->route) {
-                return false;
-            }
-            die($this->route . ' = ' . $route);
-            unset($item['url']['#']);
-            if (count($item['url']) > 1) {
-                $params = $item['url'];
-                unset($params[0]);
-                foreach ($params as $name => $value) {
-                    if ($value !== null && (!isset($this->params[$name]) || $this->params[$name] != $value)) {
-                        return false;
-                    }
-                }
-            }
-
-            return true;
-        }
-
-        return false;
+        return Html::tag('li', Html::a($icon . $label, $url, $linkOptions) . $items, $options);
     }
 
 }
