@@ -10,13 +10,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist johnsnook/yii2-sbadmin2 "*"
+php composer.phar require --prefer-dist johnsnook/yii2-sbadmin "*"
 ```
 
 or add
 
 ```
-"johnsnook/yii2-sbadmin2": "*"
+"johnsnook/yii2-sbadmin": "*"
 ```
 
 to the require section of your `composer.json` file.
@@ -27,9 +27,12 @@ Minimum stability should be changed from 'stable' to dev
 ```
 and
 
-yii bootstrap should be changed to the bootstrap 4 version
+~~yii bootstrap should be changed to the bootstrap 4 version in your composer.json~~
+We'll use the bootstrap css & js included with sb-admin/vendor, but we need 
+the bootstrap 3 version of yii/bootstrap widgets since the 2.1.0 navbar is behind
+the 2.0.8 version
 ```
-        "yiisoft/yii2-bootstrap": "~2.1.0",
+    "yiisoft/yii2-bootstrap": "~2.0.8",
 ```
 
 Usage
