@@ -27,7 +27,7 @@ Minimum stability should be changed from 'stable' to dev
 ```
 and
 
-~~yii bootstrap should be changed to the bootstrap 4 version in your composer.json~~
+yii bootstrap should be changed to the bootstrap 4 version in your composer.json
 ```
     "yiisoft/yii2-bootstrap": "~2.1.0",
 ```
