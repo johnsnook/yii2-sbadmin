@@ -37,7 +37,7 @@ class SbAdminController extends Controller {
      *
      * @return string
      */
-    public function actionPages($name) {
+    public function actionPages($name, $unique = 0) {
         if (array_search($name, ['login', 'register', 'forgot-password']) !== FALSE) {
             $this->layout = 'modal';
         }

@@ -23,9 +23,9 @@ $this->beginPage();
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
-    <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <body class="fixed-nav sticky-footer bg-dark" id="page-top" cz-shortcut-listen="true">
         <?php $this->beginBody() ?>
-        <?= $this->render('header.php') ?>
+        <?= $this->render('navigation.php') ?>
         <div class="content-wrapper">
             <div class="container-fluid">
                 <!-- Breadcrumbs-->
