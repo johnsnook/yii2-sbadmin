@@ -35,7 +35,7 @@ yii bootstrap should be changed to the bootstrap 4 version
 Usage
 -----
 
-The layout files should be copied from @vendor/johnsnook/sbadmin/layouts to backend/views/layouts where you can modify them to your hearts content.
+The layout files should be copied from @vendor/johnsnook/sbadmin/example-layouts to backend/views/layouts where you can modify them to your hearts content.
 
 Obviously in progress, I started work on 4/3/2018.
 

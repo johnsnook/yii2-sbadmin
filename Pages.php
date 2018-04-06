@@ -6,46 +6,17 @@
  * and open the template in the editor.
  */
 
-namespace johnsnook\sbadmin\controllers;
-
-use yii\web\Controller;
-use yii\filters\AccessControl;
+namespace johnsnook\sbadmin;
 
 /**
- * Controller for sample SBAdmin pages
+ * Description of PageAction
  *
  * @author John
  */
-class SbAdminController extends Controller {
+class Pages {
 
-    public function behaviors() {
-        return [
-            'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
-                    [
-                        'actions' => ['pages'],
-                        'allow' => true,
-                    ],
-                ],
-            ],
-        ];
-    }
-
-    /**
-     * Displays example pages for SBAdmin.
-     *
-     * @return string
-     */
-    public function actionPages($name, $unique = 0) {
-        if (array_search($name, ['login', 'register', 'forgot-password']) !== FALSE) {
-            $this->layout = 'modal';
-        }
-        return $this->renderContent($this->extractContent($name, $this->view));
-    }
-
-    private function extractContent($name, &$view) {
-        $dir = __DIR__ . '/../sb-admin/';
+    public static function extractContent($name, &$view) {
+        $dir = __DIR__ . '/sb-admin/';
         $file = $dir . $name . '.html';
         if (!file_exists($file)) {
             throw new \yii\web\NotFoundHttpException($name . '.html was not found in the sb-admin directory.');
