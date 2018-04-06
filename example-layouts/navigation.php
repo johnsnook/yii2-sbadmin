@@ -15,24 +15,23 @@ use yii\bootstrap\Html;
 <!--<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">-->
 <?php
 NavBar::begin([
-    'id' => 'mainNav',
     'brandLabel' => Yii::$app->name,
     'brandUrl' => ['site/index'],
-    'options' => ['class' => 'navbar navbar-expand-lg navbar-dark bg-dark fixed-top'],
+    'options' => ['id' => 'mainNav', 'class' => 'navbar navbar-expand-lg navbar-dark bg-dark fixed-top'],
     'renderInnerContainer' => false,
     'containerOptions' => ['class' => 'collapse navbar-collapse', 'id' => 'navbarResponsive'],
 ]);
 
 //echo Html::a(Yii::$app->name, ['site/index'], ['class' => 'navbar-brand']);
-echo Html::button(Html::tag('span', '', ['class' => 'navbar-toggler-icon']), [
-    #'type' => 'button',
-    'class' => 'navbar-toggler navbar-toggler-right',
-    'data-toggle' => 'collapse',
-    'data-target' => '#navbarResponsive',
-    'aria-controls' => 'navbarResponsive',
-    'aria-expanded' => 'false',
-    'aria-label' => 'Toggle navigation',
-])
+//echo Html::button(Html::tag('span', '', ['class' => 'navbar-toggler-icon']), [
+//    #'type' => 'button',
+//    'class' => 'navbar-toggler navbar-toggler-right',
+//    'data-toggle' => 'collapse',
+//    'data-target' => '#navbarResponsive',
+//    'aria-controls' => 'navbarResponsive',
+//    'aria-expanded' => 'false',
+//    'aria-label' => 'Toggle navigation',
+//])
 ?>
 <!--<div class="collapse navbar-collapse" id="navbarResponsive">-->
 <?php

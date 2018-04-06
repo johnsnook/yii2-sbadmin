@@ -1,21 +1,14 @@
 <?php
+/* @var $this \yii\web\View */
+/* @var $content string */
 
-/**
- * @author John Snook
- * @description main navigation view layout for sbadmin
- * @example to toggle fixed or static navbar, add or remove 'fixed-nav' from body tag
- *
- *
- * @var $this \yii\web\View
- * @var $content string
- */
 use yii\helpers\Html;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 use johnsnook\sbadmin\SbAdminThemeAsset;
 
 SbAdminThemeAsset::register($this);
-$this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favicon.png']);
+\Yii::$app->view->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => '/favicon.png']);
 $this->beginPage();
 ?>
 <!DOCTYPE html>
@@ -30,8 +23,7 @@ $this->beginPage();
         <title><?= Html::encode($this->title) ?></title>
         <?php $this->head() ?>
     </head>
-
-    <body class="fixed-nav sticky-footer bg-dark" id="page-top">
+    <body class="fixed-nav sticky-footer bg-dark" id="page-top" cz-shortcut-listen="true">
         <?php $this->beginBody() ?>
         <?= $this->render('navigation.php') ?>
         <div class="content-wrapper">

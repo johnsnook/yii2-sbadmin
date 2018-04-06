@@ -10,6 +10,7 @@ namespace johnsnook\sbadmin\widgets;
 
 use Yii;
 use yii\bootstrap\Html;
+use yii\bootstrap\Nav;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -17,7 +18,7 @@ use yii\helpers\ArrayHelper;
  *
  * @author John
  */
-class VertNav extends \yii\bootstrap\Nav {
+class VertNav extends Nav {
 
     /**
      * for unique ids for recursive sub navs
@@ -40,7 +41,7 @@ class VertNav extends \yii\bootstrap\Nav {
      *
      * @var bool $isSubNav
      */
-    protected $isSubNav = false;
+    public $isSubNav = false;
 
     /**
      * Initializes the widget.
@@ -138,16 +139,16 @@ class VertNav extends \yii\bootstrap\Nav {
             if (is_array($child) && !ArrayHelper::getValue($child, 'visible', true)) {
                 continue;
             }
-            if (ArrayHelper::remove($items[$i], 'active', false) || $this->isItemActive($child)) {
-                Html::addCssClass($items[$i]['options'], 'active');
-                if ($this->activateParents) {
-                    $active = true;
-                }
-            }
 //            if (ArrayHelper::remove($items[$i], 'active', false) || $this->isItemActive($child)) {
 //                Html::addCssClass($items[$i]['options'], 'active');
-//                $active = true;
+//                if ($this->activateParents) {
+//                    $active = true;
+//                }
 //            }
+            if (ArrayHelper::remove($items[$i], 'active', false) || $this->isItemActive($child)) {
+                Html::addCssClass($items[$i]['options'], 'active');
+                $active = true;
+            }
             $childItems = ArrayHelper::getValue($child, 'items');
             if (is_array($childItems)) {
                 $activeParent = false;

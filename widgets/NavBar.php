@@ -10,6 +10,8 @@ namespace johnsnook\sbadmin\widgets;
 
 use Yii;
 use yii\helpers\ArrayHelper;
+use yii\bootstrap\Html;
+use yii\bootstrap\BootstrapPluginAsset;
 
 /**
  * NavBar renders a navbar HTML component.
@@ -40,16 +42,7 @@ use yii\helpers\ArrayHelper;
  * @since 2.0
  * @note This is a merge of 2.0.8 and 2.1 b
  */
-class NavBar extends yii\bootstrap\Widget {
-
-    /**
-     * @var array the HTML attributes for the widget container tag. The following special options are recognized:
-     *
-     * - tag: string, defaults to "nav", the name of the container tag.
-     *
-     * @see \yii\helpers\Html::renderTagAttributes() for details on how attributes are being rendered.
-     */
-    public $options = [];
+class NavBar extends \yii\bootstrap\NavBar {
 
     /**
      * @var array the HTML attributes for the container tag. The following special options are recognized:
@@ -102,7 +95,7 @@ class NavBar extends yii\bootstrap\Widget {
      * @var bool whether the navbar content should be included in an inner div container which by default
      * adds left and right padding. Set this to false for a 100% width navbar.
      */
-    public $renderInnerContainer = true;
+    public $renderInnerContainer = false;
 
     /**
      * @var array the HTML attributes of the inner container.
@@ -114,7 +107,7 @@ class NavBar extends yii\bootstrap\Widget {
      * Initializes the widget.
      */
     public function init() {
-        parent::init();
+        //parent::init();
         $this->clientOptions = false;
         if (empty($this->options['class'])) {
             Html::addCssClass($this->options, ['navbar', 'navbar-light', 'bg-faded']);
@@ -127,17 +120,16 @@ class NavBar extends yii\bootstrap\Widget {
         $options = $this->options;
         $tag = ArrayHelper::remove($options, 'tag', 'nav');
         echo Html::beginTag($tag, $options);
+
+
+
         if ($this->renderInnerContainer) {
             if (!isset($this->innerContainerOptions['class'])) {
                 Html::addCssClass($this->innerContainerOptions, 'container');
             }
             echo Html::beginTag('div', $this->innerContainerOptions);
         }
-        echo Html::beginTag('div', ['class' => 'navbar-header']);
-        if (!isset($this->containerOptions['id'])) {
-            $this->containerOptions['id'] = "{$this->options['id']}-collapse";
-        }
-        echo $this->renderToggleButton();
+//        echo Html::beginTag('div', ['class' => 'navbar-header']);
         if ($this->brandImage !== false) {
             $this->brandLabel = Html::img($this->brandImage);
         }
@@ -145,9 +137,13 @@ class NavBar extends yii\bootstrap\Widget {
             Html::addCssClass($this->brandOptions, ['widget' => 'navbar-brand']);
             echo Html::a($this->brandLabel, $this->brandUrl === false ? Yii::$app->homeUrl : $this->brandUrl, $this->brandOptions);
         }
+        if (!isset($this->containerOptions['id'])) {
+            $this->containerOptions['id'] = "{$this->options['id']}-collapse";
+        }
+        echo $this->renderToggleButton();
         echo $this->headerContent;
-        echo Html::endTag('div');
-        Html::addCssClass($this->containerOptions, ['collapse' => 'collapse', 'widget' => 'navbar-toggleable-xs']);
+//        echo Html::endTag('div');
+        Html::addCssClass($this->containerOptions, ['collapse' => 'collapse', /* 'widget' => 'navbar-toggleable-xs' */]);
         $options = $this->containerOptions;
         $tag = ArrayHelper::remove($options, 'tag', 'div');
         echo Html::beginTag($tag, $options);
@@ -176,7 +172,7 @@ class NavBar extends yii\bootstrap\Widget {
         $screenReader = "<span class=\"sr-only\">{$this->screenReaderToggleText}</span>";
 
         return Html::button("{$screenReader}\n&#9776;", [
-                    'class' => 'navbar-toggler hidden-sm-up',
+                    'class' => 'navbar-toggler navbar-toggler-right',
                     'data-toggle' => 'collapse',
                     'data-target' => "#{$this->containerOptions['id']}",
         ]);
