@@ -8,9 +8,9 @@
  *
  * @var $this \yii\web\View
  */
-use johnsnook\sbadmin\VertNav;
+use johnsnook\sbadmin\widgets\NavBar;
+use johnsnook\sbadmin\widgets\VertNav;
 use yii\bootstrap\Html;
-use yii\bootstrap\NavBar;
 ?>
 <!--<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">-->
 <?php

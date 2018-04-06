@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace johnsnook\sbadmin;
+namespace johnsnook\sbadmin\widgets;
 
 use Yii;
 use yii\bootstrap\Html;
@@ -19,16 +19,34 @@ use yii\helpers\ArrayHelper;
  */
 class VertNav extends \yii\bootstrap\Nav {
 
-    public $dropdownClass = 'common\components\Subnav';
+    /**
+     * for unique ids for recursive sub navs
+     *
+     * @todo see if still necessary
+     * @var integer $autoId
+     */
     private static $autoId = 50;
+
+    /**
+     * Overriding glyphicon, i should move this to the widget call in layout
+     *
+     * @var string $iconClassPrefix
+     */
     public static $iconClassPrefix = 'fa fa-';
-    public $isSubNav = false;
+
+    /**
+     * Subnav are this widget calling itself recursively, this allows us to keep
+     * track of where we are
+     *
+     * @var bool $isSubNav
+     */
+    protected $isSubNav = false;
 
     /**
      * Initializes the widget.
      */
     public function init() {
-        #parent::init();
+//        parent::init();
         if ($this->route === null && Yii::$app->controller !== null) {
             $this->route = Yii::$app->controller->getRoute();
         }
@@ -69,24 +87,26 @@ class VertNav extends \yii\bootstrap\Nav {
         }
 
         if (empty($items)) {
-            #$arrow = '';
             $items = '';
         } else {
-            #$arrow = Html::tag('i', '', ['class' => 'fa fa-angle-right float-right']);
             $linkOptions['data-toggle'] = 'collapse';
-            $linkOptions['aria-expanded'] = 'false';
-            Html::addCssClass($linkOptions, ['widget' => 'nav-link-collapse collapsed']);
+            Html::addCssClass($linkOptions, ['widget' => 'nav-link-collapse ']);
             if (is_array($items)) {
-                $items = $this->isChildActive($items, $active);
                 $id = 'collapse' . $this::$autoId++;
                 $url = $item['url'] = "#$id";
                 $linkOptions['aria-controls'] = $id;
                 $woptions = ArrayHelper::merge($this->options, ArrayHelper::getValue($item, 'menuOptions', []));
+                $childActive = $active;
+                $items = $this->isChildActive($items, $childActive);
+                if ($childActive) {
+                    Html::addCssClass($woptions, 'show');
+                }
                 $woptions['id'] = $id;
                 $woptions['data-parent'] = '#' . $this->options['id'];
                 //$woptions['class'] = 'collapse';
                 Html::addCssClass($woptions, ['collapse']);
-                $items = VertNav::widget([
+                /** Hey, we're recursing */
+                $items = self::widget([
                             'options' => $woptions,
                             'isSubNav' => true,
                             'items' => $items,
@@ -97,14 +117,48 @@ class VertNav extends \yii\bootstrap\Nav {
         Html::addCssClass($options, 'nav-item');
         Html::addCssClass($linkOptions, 'nav-link');
 
-
         if ($this->activateItems && $active) {
-            $linkOptions['aria-selected'] = true;
+            Html::addCssClass($options, 'active');
         }
 
         $label = Html::tag('span', $label, ['class' => 'nav-link-text']);
-
         return Html::tag('li', Html::a($icon . $label, $url, $linkOptions) . $items, $options);
+    }
+
+    /**
+     * Check to see if a child item is active optionally activating the parent.
+     *
+     * merged changes from 2.0.8
+     * @param array $items @see items
+     * @param boolean $active should the parent be active too
+     * @return array @see items
+     */
+    protected function isChildActive($items, &$active) {
+        foreach ($items as $i => $child) {
+            if (is_array($child) && !ArrayHelper::getValue($child, 'visible', true)) {
+                continue;
+            }
+            if (ArrayHelper::remove($items[$i], 'active', false) || $this->isItemActive($child)) {
+                Html::addCssClass($items[$i]['options'], 'active');
+                if ($this->activateParents) {
+                    $active = true;
+                }
+            }
+//            if (ArrayHelper::remove($items[$i], 'active', false) || $this->isItemActive($child)) {
+//                Html::addCssClass($items[$i]['options'], 'active');
+//                $active = true;
+//            }
+            $childItems = ArrayHelper::getValue($child, 'items');
+            if (is_array($childItems)) {
+                $activeParent = false;
+                $items[$i]['items'] = $this->isChildActive($childItems, $activeParent);
+                if ($activeParent) {
+                    Html::addCssClass($items[$i]['options'], 'active');
+                    $active = true;
+                }
+            }
+        }
+        return $items;
     }
 
 }
