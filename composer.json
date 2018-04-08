@@ -2,7 +2,7 @@
     "name": "johnsnook/yii2-sbadmin",
     "description": "A Bootstrap 4 admin template theme for Yii2",
     "type": "yii2-extension",
-    "keywords": ["yii2", "extension", "bootstrap", "admin", "template", "", "php", "theme", "html5", "jquery", "sbadmin", "bootstrap4"],
+    "keywords": ["yii2", "extension", "bootstrap", "admin", "template", "vertnav", "php", "theme", "html5", "jquery", "sbadmin", "bootstrap4"],
     "license": "MIT",
     "authors": [
         {
