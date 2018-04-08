@@ -8,45 +8,60 @@
  *
  * @var $this \yii\web\View
  */
-use johnsnook\sbadmin\widgets\NavBar4;
-use johnsnook\sbadmin\widgets\VertNav4;
-use yii\bootstrap\Html;
-use johnsnook\sbadmin\widgets\Nav4;
-?>
-<?php
-NavBar4::begin([
+use johnsnook\sbadmin\widgets\NavBar;
+use johnsnook\sbadmin\widgets\Nav;
+
+NavBar::begin([
     'brandLabel' => Yii::$app->name,
     'brandUrl' => ['site/index'],
-    'options' => ['id' => 'mainNav', 'class' => 'navbar navbar-expand-lg navbar-dark bg-dark fixed-top'],
+    'options' => ['id' => 'mainNav', 'class' => 'navbar navbar-expand-lg navbar-dark bg-dark fixed-top bg-red'],
     'renderInnerContainer' => false,
     'containerOptions' => ['class' => 'collapse navbar-collapse', 'id' => 'navbarResponsive'],
 ]);
-echo VertNav4::widget([
+echo Nav::widget([
     'options' => [
         'id' => 'exampleAccordion',
         'class' => 'navbar-nav flex-column navbar-sidenav',
     ],
     'items' => [
-        ['label' => 'Dashboard', 'url' => ['sbadmin/pages', 'name' => 'index'], 'icon' => 'dashboard', "options" => ['data-toggle' => "tooltip", 'data-placement' => "right", 'title' => "Dashboard"]],
+        ['label' => 'Dashboard', 'url' => ['sbadmin/pages', 'name' => 'index'],
+            'icon' => 'dashboard', "options" => ['data-toggle' => "tooltip",
+                'data-placement' => "right", 'title' => "Dashboard"]],
         ['label' => 'charts', 'icon' => 'area-chart', 'url' => ['sbadmin/pages', 'name' => 'charts']],
         ['label' => 'tables', 'icon' => 'table', 'url' => ['sbadmin/pages', 'name' => 'tables']],
-        ['label' => 'Components', 'icon' => 'wrench', 'menuOptions' => ['class' => 'sidenav-second-level'], 'items' => [
+        ['label' => 'Components', 'icon' => 'wrench', 'menuOptions' => [
+                'class' => 'sidenav-second-level',
+                'type' => Nav::MENU_TYPE_ACCORDION
+            ],
+            'items' => [
                 ['label' => 'Navbar', 'url' => ['sbadmin/pages', 'name' => 'navbar']],
                 ['label' => 'cards', 'url' => ['sbadmin/pages', 'name' => 'cards']],
             ]
         ],
-        ['label' => 'Example Pages', 'icon' => 'file', 'menuOptions' => ['class' => 'sidenav-second-level'], 'items' => [
+        ['label' => 'Example Pages', 'icon' => 'file', 'menuOptions' => [
+                'class' => 'sidenav-second-level',
+                'type' => Nav::MENU_TYPE_ACCORDION
+            ],
+            'items' => [
                 ['label' => 'Login Page', 'url' => ['sbadmin/pages', 'name' => 'login']],
                 ['label' => 'Registration Page', 'url' => ['sbadmin/pages', 'name' => 'register']],
                 ['label' => 'Forgot Password Page', 'url' => ['sbadmin/pages', 'name' => 'forgot-password']],
                 ['label' => 'Blank', 'url' => ['sbadmin/pages', 'name' => 'blank']],
             ]
         ],
-        ['label' => 'Menu Levels', 'icon' => 'sitemap', 'menuOptions' => ['class' => 'sidenav-second-level'], 'items' => [
+        ['label' => 'Menu Levels', 'icon' => 'sitemap', 'menuOptions' => [
+                'class' => 'sidenav-second-level',
+                'type' => Nav::MENU_TYPE_ACCORDION
+            ],
+            'items' => [
                 ['label' => 'second level item', 'url' => ['sbadmin/pages', 'name' => 'blank', 'unique' => 1]],
                 ['label' => 'second level item', 'url' => ['sbadmin/pages', 'name' => 'blank', 'unique' => 2]],
                 ['label' => 'second level item', 'url' => ['sbadmin/pages', 'name' => 'blank', 'unique' => 3]],
-                ['label' => 'Third Level', 'menuOptions' => ['class' => 'sidenav-third-level'], 'items' => [
+                ['label' => 'Third Level', 'menuOptions' => [
+                        'class' => 'sidenav-third-level',
+                        'type' => Nav::MENU_TYPE_ACCORDION
+                    ],
+                    'items' => [
                         ['label' => 'Third Level Item', 'url' => ['sbadmin/pages', 'name' => 'blank', 'unique' => 4]],
                         ['label' => 'Third Level Item', 'url' => ['sbadmin/pages', 'name' => 'blank', 'unique' => 5]],
                         ['label' => 'Third Level Item', 'url' => ['sbadmin/pages', 'name' => 'blank', 'unique' => 6]],
@@ -59,15 +74,7 @@ echo VertNav4::widget([
 ]);
 echo Nav::widget([
     'options' => [
-        'class' => 'sidenav-toggler navbar-nav',
-    ],
-    'items' => [
-        ['label' => null, 'linkOptions' => ['id' => 'sidenavToggler'], 'icon' => 'angle-left']
-    ]
-]);
-echo Nav::widget([
-    'options' => [
-        'class' => 'sidenav-toggler navbar-nav',
+        'class' => 'sidenav-toggler',
     ],
     'items' => [
         ['label' => null, 'linkOptions' => ['id' => 'sidenavToggler'], 'icon' => 'angle-left']

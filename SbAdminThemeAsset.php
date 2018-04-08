@@ -2,17 +2,17 @@
 
 namespace johnsnook\sbadmin;
 
-use yii\web\AssetBundle;
-
 /**
  * Main frontend application asset bundle.
+ *
+ * @author John Snook <jsnook@gmail.com>
  */
-class SbAdminThemeAsset extends AssetBundle {
+class SbAdminThemeAsset extends \yii\web\AssetBundle {
 
     public $sourcePath = __DIR__;
     public $css = [
-        'sb-admin/vendor/bootstrap/css/bootstrap' . (YII_ENV_DEV ? '' : '.min') . '.css',
         'sb-admin/vendor/font-awesome/css/font-awesome' . (YII_ENV_DEV ? '' : '.min') . '.css',
+        'sb-admin/vendor/bootstrap/css/bootstrap' . (YII_ENV_DEV ? '' : '.min') . '.css',
         'sb-admin/css/sb-admin' . (YII_ENV_DEV ? '' : '.min') . '.css',
             #'assets/css/yii2-sbadmin.css',
     ];
@@ -41,23 +41,23 @@ class SbAdminThemeAsset extends AssetBundle {
             $cssFiles = [];
 
             switch (\Yii::$app->controller->actionParams['name']) {
+                case 'index':
+                    $jsFiles = [
+                        'sb-admin/vendor/chart.js/Chart.min.js',
+                        'sb-admin/vendor/chart.js/Chart.bundle.min.js',
+                        'sb-admin/js/sb-admin-charts.min.js',
+                        'sb-admin/vendor/datatables/jquery.dataTables.js',
+                        'sb-admin/vendor/datatables/dataTables.bootstrap4.js',
+                        'sb-admin/js/sb-admin-datatables.min.js'
+                    ];
+                    $cssFiles = ['sb-admin/vendor/datatables/dataTables.bootstrap4.css'];
+                    break;
                 case 'charts':
                     $jsFiles = [
                         'sb-admin/vendor/chart.js/Chart.min.js',
                         'sb-admin/vendor/chart.js/Chart.bundle.min.js',
                         'sb-admin/js/sb-admin-charts.min.js'
                     ];
-                    break;
-                case 'index':
-                    $jsFiles = [
-                        'sb-admin/js/sb-admin-charts.min.js',
-                        'sb-admin/vendor/chart.js/Chart.min.js',
-                        #'sb-admin/vendor/chart.js/Chart.bundle.min.js',
-                        'sb-admin/vendor/datatables/jquery.dataTables.js',
-                        'sb-admin/vendor/datatables/dataTables.bootstrap4.js',
-                        'sb-admin/js/sb-admin-datatables.min.js'
-                    ];
-                    $cssFiles = ['sb-admin/vendor/datatables/dataTables.bootstrap4.css'];
                     break;
                 case 'tables':
                     $jsFiles = [
