@@ -1,9 +1,9 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+/**
+ * @link http://www.snooky.biz/
+ * @copyright Copyright (c) 2018 John Snook Consulting
+ * @license http://www.yiiframework.com/license/
  */
 
 namespace johnsnook\sbadmin\widgets;
@@ -18,15 +18,7 @@ use yii\helpers\ArrayHelper;
  *
  * @author John
  */
-class VertNav extends Nav {
-
-    /**
-     * for unique ids for recursive sub navs
-     *
-     * @todo see if still necessary
-     * @var integer $autoId
-     */
-    private static $autoId = 50;
+class Nav4 extends Nav {
 
     /**
      * Overriding glyphicon, i should move this to the widget call in layout
@@ -36,27 +28,21 @@ class VertNav extends Nav {
     public static $iconClassPrefix = 'fa fa-';
 
     /**
-     * Subnav are this widget calling itself recursively, this allows us to keep
-     * track of where we are
-     *
-     * @var bool $isSubNav
-     */
-    public $isSubNav = false;
-
-    /**
      * Initializes the widget.
      */
     public function init() {
-//        parent::init();
+        parent::init();
         if ($this->route === null && Yii::$app->controller !== null) {
             $this->route = Yii::$app->controller->getRoute();
         }
         if ($this->params === null) {
             $this->params = Yii::$app->request->getQueryParams();
         }
-        if (!$this->isSubNav) {
-            Html::addCssClass($this->options, ['widget' => 'nav']);
+        if ($this->dropDownCaret === null) {
+            $this->dropDownCaret = '<span class="caret"></span>';
         }
+        Html::removeCssClass($this->options, ['widget' => 'nav']);
+        Html::addCssClass($this->options, ['widget' => 'navbar-nav']);
     }
 
     /**
@@ -70,12 +56,17 @@ class VertNav extends Nav {
             return $item;
         }
         if (!isset($item['label'])) {
-            throw new InvalidConfigException("The 'label' option is required.");
+            if (!isset($item['icon'])) {
+                throw new InvalidConfigException("Either the 'label' or the 'icon' option is required.");
+            }
+            $label = '';
+        } else {
+            $item['label'] = ucwords($item['label']);
+            $encodeLabel = isset($item['encode']) ? $item['encode'] : $this->encodeLabels;
+            $label = $encodeLabel ? Html::encode($item['label']) : $item['label'];
         }
-        $item['label'] = ucwords($item['label']);
-        $encodeLabel = isset($item['encode']) ? $item['encode'] : $this->encodeLabels;
-        $label = $encodeLabel ? Html::encode($item['label']) : $item['label'];
-        $icon = (isset($item['icon']) ? Html::tag('i', '', ['class' => self::$iconClassPrefix . $item['icon']]) . '&nbsp;' : '');
+
+        $icon = (isset($item['icon']) ? Html::tag('i', '', ['class' => self::$iconClassPrefix . $item['icon']]) : '');
         $options = ArrayHelper::getValue($item, 'options', []);
         $items = ArrayHelper::getValue($item, 'items');
         $url = ArrayHelper::getValue($item, 'url', 'javascript:;');
@@ -91,7 +82,7 @@ class VertNav extends Nav {
             $items = '';
         } else {
             $linkOptions['data-toggle'] = 'collapse';
-            Html::addCssClass($linkOptions, ['widget' => 'nav-link-collapse ']);
+            Html::addCssClass($linkOptions, ['widget' => 'nav-link-collapse']);
             if (is_array($items)) {
                 $id = 'collapse' . $this::$autoId++;
                 $url = $item['url'] = "#$id";
@@ -101,10 +92,12 @@ class VertNav extends Nav {
                 $items = $this->isChildActive($items, $childActive);
                 if ($childActive) {
                     Html::addCssClass($woptions, 'show');
+                } else {
+                    Html::addCssClass($linkOptions, 'collapsed');
                 }
                 $woptions['id'] = $id;
                 $woptions['data-parent'] = '#' . $this->options['id'];
-                //$woptions['class'] = 'collapse';
+
                 Html::addCssClass($woptions, ['collapse']);
                 /** Hey, we're recursing */
                 $items = self::widget([
@@ -122,7 +115,7 @@ class VertNav extends Nav {
             Html::addCssClass($options, 'active');
         }
 
-        $label = Html::tag('span', $label, ['class' => 'nav-link-text']);
+        $label = !empty($label) ? Html::tag('span', $label, ['class' => 'nav-link-text']) : '';
         return Html::tag('li', Html::a($icon . $label, $url, $linkOptions) . $items, $options);
     }
 

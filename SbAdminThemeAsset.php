@@ -70,7 +70,6 @@ class SbAdminThemeAsset extends AssetBundle {
                     $jsFiles = [
                         'assets/js/navbar.js'
                     ];
-                    $cssFiles = ['sb-admin/vendor/datatables/dataTables.bootstrap4.css'];
                     break;
                 default:
             }

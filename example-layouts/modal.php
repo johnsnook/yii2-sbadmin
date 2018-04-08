@@ -28,7 +28,7 @@ SbAdminThemeAsset::register($this);
         <?= Alert::widget() ?>
         <?= $content ?>
         <div class="container justify-content-center">
-            <?= Html::a('<i class="fa fa-left-arrow"></i>Back to dashboard', ['/site/pages', 'name' => 'index'], ['class' => 'btn btn-block btn-success']) ?>
+            <?= Html::a('<i class="fa fa-left-arrow"></i>Back to dashboard', ['/sbadmin/pages', 'name' => 'index'], ['class' => 'btn btn-block btn-success']) ?>
         </div>
 
         <?php
