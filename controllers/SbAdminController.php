@@ -61,7 +61,13 @@ class SbAdminController extends Controller {
         foreach ($divs as $div) {
             if ($div->hasAttribute('class')) {
                 if ($div->getAttribute('class') === $searchClass) {
-                    return $dom->saveHTML($div);
+                    $dOut = new \DOMDocument();
+                    #$dOut->formatOutput = true;
+                    foreach ($div->childNodes as $node) {
+                        $node = $dOut->importNode($node, true);
+                        $dOut->appendChild($node);
+                    }
+                    return $dOut->saveHTML();
                 }
             }
         }

@@ -8,34 +8,20 @@
  *
  * @var $this \yii\web\View
  */
-use johnsnook\sbadmin\widgets\NavBar;
-use johnsnook\sbadmin\widgets\VertNav;
+use johnsnook\sbadmin\widgets\NavBar4;
+use johnsnook\sbadmin\widgets\VertNav4;
 use yii\bootstrap\Html;
+use johnsnook\sbadmin\widgets\Nav4;
 ?>
-<!--<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="mainNav">-->
 <?php
-NavBar::begin([
+NavBar4::begin([
     'brandLabel' => Yii::$app->name,
     'brandUrl' => ['site/index'],
     'options' => ['id' => 'mainNav', 'class' => 'navbar navbar-expand-lg navbar-dark bg-dark fixed-top'],
     'renderInnerContainer' => false,
     'containerOptions' => ['class' => 'collapse navbar-collapse', 'id' => 'navbarResponsive'],
 ]);
-
-//echo Html::a(Yii::$app->name, ['site/index'], ['class' => 'navbar-brand']);
-//echo Html::button(Html::tag('span', '', ['class' => 'navbar-toggler-icon']), [
-//    #'type' => 'button',
-//    'class' => 'navbar-toggler navbar-toggler-right',
-//    'data-toggle' => 'collapse',
-//    'data-target' => '#navbarResponsive',
-//    'aria-controls' => 'navbarResponsive',
-//    'aria-expanded' => 'false',
-//    'aria-label' => 'Toggle navigation',
-//])
-?>
-<!--<div class="collapse navbar-collapse" id="navbarResponsive">-->
-<?php
-echo VertNav::widget([
+echo VertNav4::widget([
     'options' => [
         'id' => 'exampleAccordion',
         'class' => 'navbar-nav flex-column navbar-sidenav',
@@ -71,14 +57,23 @@ echo VertNav::widget([
         ['label' => 'Link', 'icon' => 'link'],
     ],
 ]);
+echo Nav::widget([
+    'options' => [
+        'class' => 'sidenav-toggler navbar-nav',
+    ],
+    'items' => [
+        ['label' => null, 'linkOptions' => ['id' => 'sidenavToggler'], 'icon' => 'angle-left']
+    ]
+]);
+echo Nav::widget([
+    'options' => [
+        'class' => 'sidenav-toggler navbar-nav',
+    ],
+    'items' => [
+        ['label' => null, 'linkOptions' => ['id' => 'sidenavToggler'], 'icon' => 'angle-left']
+    ]
+]);
 ?>
-<ul class="navbar-nav sidenav-toggler">
-    <li class="nav-item">
-        <a class="nav-link text-center" id="sidenavToggler">
-            <i class="fa fa-fw fa-angle-left"></i>
-        </a>
-    </li>
-</ul>
 <ul class="navbar-nav ml-auto">
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -178,4 +173,3 @@ echo VertNav::widget([
 <?php
 NavBar::end();
 ?>
-&npsp;

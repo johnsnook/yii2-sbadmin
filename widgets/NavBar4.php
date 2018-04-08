@@ -1,8 +1,8 @@
 <?php
 
 /**
- * @link http://www.yiiframework.com/
- * @copyright Copyright (c) 2008 Yii Software LLC
+ * @link http://www.snooky.biz/
+ * @copyright Copyright (c) 2018 John Snook Consulting
  * @license http://www.yiiframework.com/license/
  */
 
@@ -35,14 +35,14 @@ use yii\bootstrap\BootstrapPluginAsset;
  * NavBar::end();
  * ```
  *
- * @see https://getbootstrap.com/docs/3.3/components/#navbar
+ * @see https://getbootstrap.com/docs/4.0/components/navbar/
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
  * @author Alexander Kochetov <creocoder@gmail.com>
  * @author John Snook <jsnook@gmail.com>
  * @since 2.0
  * @note This is a merge of 2.0.8 and 2.1 b
  */
-class NavBar extends \yii\bootstrap\NavBar {
+class NavBar4 extends \yii\bootstrap\NavBar {
 
     /**
      * @var array the HTML attributes for the container tag. The following special options are recognized:
@@ -175,6 +175,9 @@ class NavBar extends \yii\bootstrap\NavBar {
                     'class' => 'navbar-toggler navbar-toggler-right',
                     'data-toggle' => 'collapse',
                     'data-target' => "#{$this->containerOptions['id']}",
+                    'aria-controls' => 'navbarResponsive',
+                    'aria-expanded' => 'false',
+                    'aria-label' => 'Toggle navigation'
         ]);
     }
 
