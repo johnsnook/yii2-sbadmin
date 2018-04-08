@@ -10,8 +10,8 @@ namespace johnsnook\sbadmin\widgets;
 
 use Yii;
 use yii\helpers\ArrayHelper;
-use yii\bootstrap\Html;
-use yii\bootstrap\BootstrapPluginAsset;
+use yii\helpers\Html;
+use johnsnook\sbadmin\Bootstrap4PluginAsset;
 
 /**
  * NavBar renders a navbar HTML component.
@@ -42,7 +42,16 @@ use yii\bootstrap\BootstrapPluginAsset;
  * @since 2.0
  * @note This is a merge of 2.0.8 and 2.1 b
  */
-class NavBar4 extends \yii\bootstrap\NavBar {
+class NavBar extends Widget {
+
+    /**
+     * @var array the HTML attributes for the widget container tag. The following special options are recognized:
+     *
+     * - tag: string, defaults to "nav", the name of the container tag.
+     *
+     * @see \yii\helpers\Html::renderTagAttributes() for details on how attributes are being rendered.
+     */
+    public $options = [];
 
     /**
      * @var array the HTML attributes for the container tag. The following special options are recognized:
@@ -160,7 +169,7 @@ class NavBar4 extends \yii\bootstrap\NavBar {
         }
         $tag = ArrayHelper::remove($this->options, 'tag', 'nav');
         echo Html::endTag($tag);
-        BootstrapPluginAsset::register($this->getView());
+        Bootstrap4PluginAsset::register($this->getView());
     }
 
     /**

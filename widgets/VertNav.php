@@ -9,8 +9,8 @@
 namespace johnsnook\sbadmin\widgets;
 
 use Yii;
-use yii\bootstrap\Html;
-use yii\bootstrap\Nav;
+use yii\helpers\Html;
+//use yii\bootstrap\Nav;
 use yii\helpers\ArrayHelper;
 
 /**
@@ -18,7 +18,15 @@ use yii\helpers\ArrayHelper;
  *
  * @author John
  */
-class Nav4 extends Nav {
+class VertNav extends Nav {
+
+    /**
+     * for unique ids for recursive sub navs
+     *
+     * @todo see if still necessary
+     * @var integer $autoId
+     */
+    private static $autoId = 50;
 
     /**
      * Overriding glyphicon, i should move this to the widget call in layout
@@ -28,21 +36,27 @@ class Nav4 extends Nav {
     public static $iconClassPrefix = 'fa fa-';
 
     /**
+     * Is this widget calling itself recursively? this allows us to keep
+     * track of where we are so we don't class the <ul> container as navbar-nav
+     *
+     * @var bool $isSubNav
+     */
+    public $isSubNav = false;
+
+    /**
      * Initializes the widget.
      */
     public function init() {
-        parent::init();
+//        parent::init();
         if ($this->route === null && Yii::$app->controller !== null) {
             $this->route = Yii::$app->controller->getRoute();
         }
         if ($this->params === null) {
             $this->params = Yii::$app->request->getQueryParams();
         }
-        if ($this->dropDownCaret === null) {
-            $this->dropDownCaret = '<span class="caret"></span>';
+        if (!$this->isSubNav) {
+            Html::addCssClass($this->options, ['widget' => 'navbar-nav']);
         }
-        Html::removeCssClass($this->options, ['widget' => 'nav']);
-        Html::addCssClass($this->options, ['widget' => 'navbar-nav']);
     }
 
     /**
@@ -56,17 +70,12 @@ class Nav4 extends Nav {
             return $item;
         }
         if (!isset($item['label'])) {
-            if (!isset($item['icon'])) {
-                throw new InvalidConfigException("Either the 'label' or the 'icon' option is required.");
-            }
-            $label = '';
-        } else {
-            $item['label'] = ucwords($item['label']);
-            $encodeLabel = isset($item['encode']) ? $item['encode'] : $this->encodeLabels;
-            $label = $encodeLabel ? Html::encode($item['label']) : $item['label'];
+            throw new InvalidConfigException("The 'label' option is required.");
         }
-
-        $icon = (isset($item['icon']) ? Html::tag('i', '', ['class' => self::$iconClassPrefix . $item['icon']]) : '');
+        $item['label'] = ucwords($item['label']);
+        $encodeLabel = isset($item['encode']) ? $item['encode'] : $this->encodeLabels;
+        $label = $encodeLabel ? Html::encode($item['label']) : $item['label'];
+        $icon = (isset($item['icon']) ? Html::tag('i', '', ['class' => self::$iconClassPrefix . $item['icon']]) . '&nbsp;' : '');
         $options = ArrayHelper::getValue($item, 'options', []);
         $items = ArrayHelper::getValue($item, 'items');
         $url = ArrayHelper::getValue($item, 'url', 'javascript:;');
@@ -115,7 +124,7 @@ class Nav4 extends Nav {
             Html::addCssClass($options, 'active');
         }
 
-        $label = !empty($label) ? Html::tag('span', $label, ['class' => 'nav-link-text']) : '';
+        $label = Html::tag('span', $label, ['class' => 'nav-link-text']);
         return Html::tag('li', Html::a($icon . $label, $url, $linkOptions) . $items, $options);
     }
 

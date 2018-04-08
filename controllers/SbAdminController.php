@@ -14,7 +14,7 @@ use yii\filters\AccessControl;
 /**
  * Controller for sample SBAdmin pages
  *
- * @author John
+ * @author John Snook <jsnook@gmail.com>
  */
 class SbAdminController extends Controller {
 
