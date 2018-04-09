@@ -1,6 +1,6 @@
 Yii2 SB Admin 2 Theme
 =====================
-A Bootstrap 4 admin template theme for Yii2
+A Bootstrap 4 admin template theme for Yii2.  Developed for a Yii2 advanced installation, but should work fine with a basic install.
 
 Installation
 ------------
@@ -10,13 +10,13 @@ The preferred way to install this extension is through [composer](http://getcomp
 Either run
 
 ```
-php composer.phar require --prefer-dist johnsnook/yii2-sbadmin "*"
+php composer.phar require --prefer-dist johnsnook/yii2-sbadmin "~1.0.0"
 ```
 
 or add
 
 ```
-"johnsnook/yii2-sbadmin": "*"
+"johnsnook/yii2-sbadmin": "~1.0.0"
 ```
 
 to the require section of your `composer.json` file.
@@ -25,17 +25,11 @@ Minimum stability should be changed from 'stable' to dev
 ```
     "minimum-stability": "dev",
 ```
-and
-
-yii bootstrap should be changed to the bootstrap 4 version in your composer.json
-```
-    "yiisoft/yii2-bootstrap": "~2.1.0",
-```
 
 Usage
 -----
 
-The layout files should be copied from @vendor/johnsnook/sbadmin/example-layouts to backend/views/layouts where you can modify them to your hearts content.
+The layout files should be copied from @vendor/johnsnook/sbadmin/example-layouts to backend/views/layouts where you can modify them to your hearts content.  navigation.php will probably be your main focus.
 
 Obviously in progress, I started work on 4/3/2018.
 
