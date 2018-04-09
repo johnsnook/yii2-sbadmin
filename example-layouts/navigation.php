@@ -11,6 +11,7 @@
  */
 use johnsnook\sbadmin\widgets\NavBar;
 use johnsnook\sbadmin\widgets\Nav;
+
 use johnsnook\sbadmin\FakeData;
 
 echo '<!-- Begin NavBar.  Contains the brand link, the collapsed menu button and ' . PHP_EOL
@@ -72,7 +73,7 @@ echo Nav::widget([
                 [
                     'label' => 'Third Level',
                     'menuOptions' => [
-                        'class' => 'sidenav-third-level',
+              'class' => 'sidenav-third-level',
                         'type' => Nav::MENU_TYPE_ACCORDION
                     ],
                     'items' => [

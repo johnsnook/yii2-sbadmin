@@ -18,6 +18,7 @@ trait Bootstrap4WidgetTrait {
 
     use \yii\bootstrap\BootstrapWidgetTrait;
 
+
     /**
      * Registers a specific Bootstrap plugin and the related events
      * @param string $name the name of the Bootstrap plugin
@@ -37,5 +38,4 @@ trait Bootstrap4WidgetTrait {
 
         $this->registerClientEvents();
     }
-
 }

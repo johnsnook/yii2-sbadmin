@@ -239,6 +239,7 @@ class Nav extends Widget {
                     $id = 'collapse' . $this::$autoId++;
                     $url = $item['url'] = "#$id";
                     $linkOptions['aria-controls'] = $id;
+
                     $woptions = ArrayHelper::getValue($item, 'menuOptions', []);
                     $childActive = $active;
                     $items = $this->isChildActive($items, $childActive);
