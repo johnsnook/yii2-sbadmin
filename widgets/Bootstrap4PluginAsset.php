@@ -22,7 +22,7 @@ class Bootstrap4PluginAsset extends Bootstrap4Asset {
     ];
     public $depends = [
         'yii\web\JqueryAsset',
-        'johnsnook\sbadmin\widgets\BootstrapAsset4',
+        'johnsnook\sbadmin\widgets\Bootstrap4Asset',
     ];
 
 }

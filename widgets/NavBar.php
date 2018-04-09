@@ -3,7 +3,7 @@
 /**
  * @link http://www.snooky.biz/
  * @copyright Copyright (c) 2018 John Snook Consulting
- * @license http://www.yiiframework.com/license/
+ * @license https://raw.githubusercontent.com/johnsnook/yii2-sbadmin/master/LICENSE
  */
 
 namespace johnsnook\sbadmin\widgets;
@@ -11,7 +11,8 @@ namespace johnsnook\sbadmin\widgets;
 use Yii;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
-use johnsnook\sbadmin\Bootstrap4PluginAsset;
+
+#use johnsnook\sbadmin\widgets\Bootstrap4PluginAsset;
 
 /**
  * NavBar renders a navbar HTML component.

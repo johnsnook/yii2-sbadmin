@@ -2,7 +2,8 @@
 
 /**
  * @author John Snook
- * @description main layout for sbadmin
+ * @description main layout for sbadmin, using pure Yii2 method.  I had to write
+ * my own widgets to do it, however.
  * @example to toggle fixed or static navbar, add or remove 'fixed-top' from nav
  *
  *
@@ -10,23 +11,34 @@
  */
 use johnsnook\sbadmin\widgets\NavBar;
 use johnsnook\sbadmin\widgets\Nav;
+use johnsnook\sbadmin\FakeData;
 
+echo '<!-- Begin NavBar.  Contains the brand link, the collapsed menu button and ' . PHP_EOL
+ . 'the collapsible div whick contains the Nav items.-->' . PHP_EOL;
 NavBar::begin([
     'brandLabel' => Yii::$app->name,
     'brandUrl' => ['site/index'],
-    'options' => ['id' => 'mainNav', 'class' => 'navbar navbar-expand-lg navbar-dark bg-dark fixed-top bg-red'],
+    'options' => ['id' => 'mainNav', 'class' => 'navbar navbar-expand-lg navbar-dark bg-dark fixed-top '],
     'renderInnerContainer' => false,
     'containerOptions' => ['class' => 'collapse navbar-collapse', 'id' => 'navbarResponsive'],
 ]);
+echo '<!-- Start side Nav-->' . PHP_EOL;
 echo Nav::widget([
     'options' => [
         'id' => 'exampleAccordion',
         'class' => 'navbar-nav flex-column navbar-sidenav',
+        'style' => ['margin-top' => '70px']
     ],
     'items' => [
-        ['label' => 'Dashboard', 'url' => ['sbadmin/pages', 'name' => 'index'],
-            'icon' => 'dashboard', "options" => ['data-toggle' => "tooltip",
-                'data-placement' => "right", 'title' => "Dashboard"]],
+        [
+            'label' => 'Dashboard',
+            'url' => ['sbadmin/pages', 'name' => 'index'],
+            'icon' => 'dashboard',
+            "options" => [
+                'data-toggle' => "tooltip",
+                'data-placement' => "right",
+                'title' => "Dashboard"
+            ]],
         ['label' => 'charts', 'icon' => 'area-chart', 'url' => ['sbadmin/pages', 'name' => 'charts']],
         ['label' => 'tables', 'icon' => 'table', 'url' => ['sbadmin/pages', 'name' => 'tables']],
         ['label' => 'Components', 'icon' => 'wrench', 'menuOptions' => [
@@ -57,7 +69,9 @@ echo Nav::widget([
                 ['label' => 'second level item', 'url' => ['sbadmin/pages', 'name' => 'blank', 'unique' => 1]],
                 ['label' => 'second level item', 'url' => ['sbadmin/pages', 'name' => 'blank', 'unique' => 2]],
                 ['label' => 'second level item', 'url' => ['sbadmin/pages', 'name' => 'blank', 'unique' => 3]],
-                ['label' => 'Third Level', 'menuOptions' => [
+                [
+                    'label' => 'Third Level',
+                    'menuOptions' => [
                         'class' => 'sidenav-third-level',
                         'type' => Nav::MENU_TYPE_ACCORDION
                     ],
@@ -72,111 +86,134 @@ echo Nav::widget([
         ['label' => 'Link', 'icon' => 'link'],
     ],
 ]);
+echo '<!-- End side Nav-->' . PHP_EOL;
+
+echo '<!-- Start toggle button Nav.  If nav top is fixed, it\'s under the sidenav, ' . PHP_EOL
+ . 'if nav top is static, it\'s at the top. -->' . PHP_EOL;
 echo Nav::widget([
     'options' => [
         'class' => 'sidenav-toggler',
     ],
     'items' => [
-        ['label' => null, 'linkOptions' => ['id' => 'sidenavToggler'], 'icon' => 'angle-left']
+        ['label' => null, 'linkOptions' => ['id' => 'sidenavToggler', 'class' => 'text-center'], 'icon' => 'angle-left']
     ]
 ]);
-?>
-<ul class="navbar-nav ml-auto">
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle mr-lg-2" id="messagesDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-fw fa-envelope"></i>
-            <span class="d-lg-none">Messages
-                <span class="badge badge-pill badge-primary">12 New</span>
-            </span>
-            <span class="indicator text-primary d-none d-lg-block">
-                <i class="fa fa-fw fa-circle"></i>
-            </span>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="messagesDropdown">
-            <h6 class="dropdown-header">New Messages:</h6>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-                <strong>David Miller</strong>
-                <span class="small float-right text-muted">11:21 AM</span>
-                <div class="dropdown-message small">Hey there! This new version of SB Admin is pretty awesome! These messages clip off when they reach the end of the box so they don't overflow over to the sides!</div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-                <strong>Jane Smith</strong>
-                <span class="small float-right text-muted">11:21 AM</span>
-                <div class="dropdown-message small">I was wondering if you could meet for an appointment at 3:00 instead of 4:00. Thanks!</div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-                <strong>John Doe</strong>
-                <span class="small float-right text-muted">11:21 AM</span>
-                <div class="dropdown-message small">I've sent the final files over to you for review. When you're able to sign off of them let me know and we can discuss distribution.</div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item small" href="#">View all messages</a>
-        </div>
-    </li>
-    <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-fw fa-bell"></i>
-            <span class="d-lg-none">Alerts
-                <span class="badge badge-pill badge-warning">6 New</span>
-            </span>
-            <span class="indicator text-warning d-none d-lg-block">
-                <i class="fa fa-fw fa-circle"></i>
-            </span>
-        </a>
-        <div class="dropdown-menu" aria-labelledby="alertsDropdown">
-            <h6 class="dropdown-header">New Alerts:</h6>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-                <span class="text-success">
-                    <strong>
-                        <i class="fa fa-long-arrow-up fa-fw"></i>Status Update</strong>
+echo '<!-- End toggle button Nav -->' . PHP_EOL;
+
+$msgsItems = [
+    /** with no url or subitems, this becomes a header */
+    ['label' => 'New Messages'],
+    /** empties are dividers */
+    [],
+];
+
+/** Build the messeges menu with some fake data */
+foreach (FakeData::getMessages() as $msg) {
+    #die(json_encode($msg));
+    $msgsItems[] = [
+        'url' => 'javascript:;',
+        'label' => "<strong>{$msg['from']}</strong>
+                <span class=\"small float-right text-muted\">{$msg['time']}</span>
+                <div class=\"dropdown-message small\">{$msg['message']}</div>"
+    ];
+    $msgsItems[] = [];
+}
+$msgsItems[] = [
+    'label' => 'View all messages...',
+    'url' => 'javascript:;',
+    'class' => 'small'
+];
+
+$alertItems = [
+    ['label' => 'New Alerts'], /**  header */
+    [], /** divider */
+];
+
+/** Build the alerts menu with some fake data */
+foreach (FakeData::getAlerts() as $alert) {
+    #die(json_encode($msg));
+    $alertItems[] = [
+        'url' => 'javascript:;',
+        'label' => '<span class = "text-' . ($alert['good'] ? 'success' : 'danger') . '">'
+        . '<strong><i class = "fa fa-long-arrow-' . ($alert['good'] ? 'up' : 'down') . ' fa-fw"></i>'
+        . "{$alert['status']}</strong></span>"
+        . '<span class = "small float-right text-muted">' . "{$alert['time']}</span>"
+        . '<div class = "dropdown-message small">' . "{$alert['message']}</div>"
+    ];
+    $alertItems[] = [];
+}
+$alertItems[] = [
+    'label' => 'View all alerts...',
+    'url' => 'javascript:;',
+    'class' => 'small'
+];
+
+echo '<!-- Start top Nav.  Containsts 2 dropdowns, a form and nav-link. -->' . PHP_EOL;
+echo Nav::widget([
+    'encodeLabels' => false,
+    'options' => [
+        'class' => 'ml-auto',
+    ],
+    'items' => [
+        [
+            'linkOptions' => [
+                'id' => 'messagesDropdown',
+                'class' => 'mr-lg-2',
+            ],
+            'encode' => false,
+            #<i class="fa fa-fw fa-envelope"></i>
+            'icon' => 'envelope',
+            'label' => '<span class="d-lg-none">Messages
+                    <span class="badge badge-pill badge-primary">12 New</span>
                 </span>
-                <span class="small float-right text-muted">11:21 AM</span>
-                <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-                <span class="text-danger">
-                    <strong>
-                        <i class="fa fa-long-arrow-down fa-fw"></i>Status Update</strong>
-                </span>
-                <span class="small float-right text-muted">11:21 AM</span>
-                <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
-                <span class="text-success">
-                    <strong>
-                        <i class="fa fa-long-arrow-up fa-fw"></i>Status Update</strong>
-                </span>
-                <span class="small float-right text-muted">11:21 AM</span>
-                <div class="dropdown-message small">This is an automated server response message. All systems are online.</div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item small" href="#">View all alerts</a>
-        </div>
-    </li>
-    <li class="nav-item">
-        <form class="form-inline my-2 my-lg-0 mr-lg-2">
-            <div class="input-group">
-                <input class="form-control" type="text" placeholder="Search for...">
-                <span class="input-group-append">
-                    <button class="btn btn-primary" type="button">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </span>
-            </div>
-        </form>
-    </li>
-    <li class="nav-item">
-        <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
-    </li>
-</ul>
-<!--</div>-->
-<?php
+                <span class="indicator text-primary d-none d-lg-block">
+                    <i class="fa fa-fw fa-circle"></i>
+                </span>',
+            'menuOptions' => [
+                'type' => Nav::MENU_TYPE_DROPDOWN
+            ],
+            'items' => $msgsItems
+        ],
+        [
+            'linkOptions' => [
+                'id' => 'alertsDropdown',
+                'class' => 'mr-lg-2',
+            ],
+            'encode' => false,
+            'icon' => 'bell',
+            'label' => '<span class = "d-lg-none">Alerts
+                <span class = "badge badge-pill badge-warning">6 New</span>
+            </span>
+            <span class = "indicator text-warning d-none d-lg-block">
+                <i class = "fa fa-fw fa-circle"></i>
+            </span>',
+            'menuOptions' => [
+                'type' => Nav::MENU_TYPE_DROPDOWN
+            ],
+            'items' => $alertItems
+        ],
+        '<li class="nav-item">
+            <form class = "form-inline my-2 my-lg-0 mr-lg-2">
+                <div class = "input-group">
+                    <input class = "form-control" type = "text" placeholder = "Search for...">
+                    <span class = "input-group-append">
+                        <button class = "btn btn-primary" type = "button">
+                            <i class = "fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </form>
+        </li>',
+        [
+            'label' => 'logout',
+            'icon' => 'sign-out',
+            'linkOptions' => [
+                'data-toggle' => 'modal',
+                'data-target' => '#exampleModal',
+            ]
+        ]
+    ]
+]);
+echo '<!-- End top Nav -->' . PHP_EOL;
 NavBar::end();
-?>
+echo '<!-- End of NavBar. -->' . PHP_EOL;
