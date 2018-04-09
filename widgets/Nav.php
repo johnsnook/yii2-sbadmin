@@ -3,7 +3,7 @@
 /**
  * @link http://www.snooky.biz/
  * @copyright Copyright (c) 2018 John Snook Consulting
- * @license http://www.yiiframework.com/license/
+ * @license https://raw.githubusercontent.com/johnsnook/yii2-sbadmin/master/LICENSE
  */
 
 namespace johnsnook\sbadmin\widgets;
@@ -134,17 +134,10 @@ class Nav extends Widget {
     public $params;
 
     /**
-     * @var string this property allows you to customize the HTML which is used to generate the drop down caret symbol,
-     * which is displayed next to the button text to indicate the drop down functionality.
-     * Defaults to `null` which means `<span class="caret"></span>` will be used. To disable the caret, set this property to be an empty string.
-     */
-    public $dropDownCaret;
-
-    /**
      * @var string name of a class to use for rendering dropdowns within this widget. Defaults to [[Dropdown]].
      * @since 2.0.7
      */
-    public $dropdownClass = 'yii\bootstrap\Dropdown';
+    public $dropdownClass = 'johnsnook\sbadmin\widgets\Dropdown';
 
     /**
      * Initializes the widget.
@@ -157,11 +150,8 @@ class Nav extends Widget {
         if ($this->params === null) {
             $this->params = Yii::$app->request->getQueryParams();
         }
-        if ($this->dropDownCaret === null) {
-            $this->dropDownCaret = '<span class="caret"></span>';
-        }
         if (!$this->isSubNav) {
-            Html::addCssClass($this->options, ['widget' => 'navbar-nav']);
+            Html::addCssClass($this->options, ['widget ' => 'navbar-nav']);
         }
     }
 
@@ -198,15 +188,19 @@ class Nav extends Widget {
         if (is_string($item)) {
             return $item;
         }
-        if (!isset($item['label']) && !isset($item['icon'])) {
+        if (!isset($item['label']
+                ) && !isset($item['icon'])) {
             throw new InvalidConfigException("Either the 'label' or 'icon' options must be set.");
         }
         $label = '';
         if (isset($item['label'])) {
             $encodeLabel = isset($item['encode']) ? $item['encode'] : $this->encodeLabels;
-            $label = ucwords($item['label']);
-            $label = $encodeLabel ? Html::encode($label) : $label;
-            $label = Html::tag('span', $label, ['class' => 'nav-link-text']);
+            $label = $item['label'];
+            if ($encodeLabel) {
+                $label = ucfirst($label);
+                $label = $encodeLabel ? Html::encode($label) : $label;
+                $label = Html::tag('span', $label, ['class' => 'nav-link-text']);
+            }
         }
         $icon = (isset($item['icon']) ? Html::tag('i', '', ['class' => self::$iconClassPrefix . $item['icon']]) : '');
         $options = ArrayHelper::getValue($item, 'options', []);
@@ -230,11 +224,10 @@ class Nav extends Widget {
             $menuType = ArrayHelper::getValue($item['menuOptions'], 'type', self::MENU_TYPE_DROPDOWN);
             if ($menuType === self::MENU_TYPE_DROPDOWN) {
                 $linkOptions['data-toggle'] = 'dropdown';
+                $linkOptions['aria-haspopup'] = true;
+                $linkOptions['aria-expanded'] = false;
                 Html::addCssClass($options, ['widget' => 'dropdown']);
                 Html::addCssClass($linkOptions, ['widget' => 'dropdown-toggle']);
-                if ($this->dropDownCaret !== '') {
-                    $label .= ' ' . $this->dropDownCaret;
-                }
                 if (is_array($items)) {
                     $items = $this->isChildActive($items, $active);
                     $items = $this->renderDropdown($items, $item);
@@ -246,7 +239,8 @@ class Nav extends Widget {
                     $id = 'collapse' . $this::$autoId++;
                     $url = $item['url'] = "#$id";
                     $linkOptions['aria-controls'] = $id;
-                    $woptions = ArrayHelper::merge($this->options, ArrayHelper::getValue($item, 'menuOptions', []));
+
+                    $woptions = ArrayHelper::getValue($item, 'menuOptions', []);
                     $childActive = $active;
                     $items = $this->isChildActive($items, $childActive);
                     if ($childActive) {
