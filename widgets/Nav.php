@@ -54,7 +54,7 @@ use yii\helpers\ArrayHelper;
  * @author John Snook <jsnook@gmail.com>
  * @since 2.0
  */
-class Nav extends Widget {
+class Nav extends \yii\bootstrap\Nav {
 
     const MENU_TYPE_DROPDOWN = 0;
     const MENU_TYPE_ACCORDION = 1;
@@ -143,7 +143,7 @@ class Nav extends Widget {
      * Initializes the widget.
      */
     public function init() {
-        parent::init();
+        //parent::init();
         if ($this->route === null && Yii::$app->controller !== null) {
             $this->route = Yii::$app->controller->getRoute();
         }
@@ -153,14 +153,6 @@ class Nav extends Widget {
         if (!$this->isSubNav) {
             Html::addCssClass($this->options, ['widget ' => 'navbar-nav']);
         }
-    }
-
-    /**
-     * Renders the widget.
-     */
-    public function run() {
-        Bootstrap4Asset::register($this->getView());
-        return $this->renderItems();
     }
 
     /**

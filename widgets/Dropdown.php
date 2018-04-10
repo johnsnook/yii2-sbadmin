@@ -34,7 +34,7 @@ use yii\helpers\Html;
  * @author Antonio Ramirez <amigo.cobos@gmail.com>
  * @since 2.0
  */
-class Dropdown extends Widget {
+class Dropdown extends \yii\bootstrap\Dropdown {
 
     /**
      * @var array list of menu items in the dropdown. Each array element can be either an HTML string,
@@ -81,15 +81,6 @@ class Dropdown extends Widget {
         }
         parent::init();
         Html::addCssClass($this->options, ['widget' => 'dropdown-menu']);
-    }
-
-    /**
-     * Renders the widget.
-     */
-    public function run() {
-        Bootstrap4PluginAsset::register($this->getView());
-        $this->registerClientEvents();
-        return $this->renderItems($this->items, $this->options);
     }
 
     /**
