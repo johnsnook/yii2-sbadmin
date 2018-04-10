@@ -35,7 +35,6 @@ use yii\helpers\Html;
  * @since 2.0
  */
 class Dropdown extends \yii\bootstrap\Dropdown {
-
     /**
      * @var array list of menu items in the dropdown. Each array element can be either an HTML string,
      * or an array representing a single menu with the following structure:
