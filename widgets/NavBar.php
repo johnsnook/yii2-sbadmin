@@ -43,7 +43,7 @@ use yii\helpers\Html;
  * @since 2.0
  * @note This is a merge of 2.0.8 and 2.1 b
  */
-class NavBar extends Widget {
+class NavBar extends \yii\bootstrap\NavBar {
 
     /**
      * @var array the HTML attributes for the widget container tag. The following special options are recognized:
@@ -157,20 +157,6 @@ class NavBar extends Widget {
         $options = $this->containerOptions;
         $tag = ArrayHelper::remove($options, 'tag', 'div');
         echo Html::beginTag($tag, $options);
-    }
-
-    /**
-     * Renders the widget.
-     */
-    public function run() {
-        $tag = ArrayHelper::remove($this->containerOptions, 'tag', 'div');
-        echo Html::endTag($tag);
-        if ($this->renderInnerContainer) {
-            echo Html::endTag('div');
-        }
-        $tag = ArrayHelper::remove($this->options, 'tag', 'nav');
-        echo Html::endTag($tag);
-        Bootstrap4PluginAsset::register($this->getView());
     }
 
     /**
