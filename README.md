@@ -26,6 +26,11 @@ Minimum stability should be changed from 'stable' to dev
     "minimum-stability": "dev",
 ```
 
+And since we're using Bootstrap 4, change the yii2-bootstrap line to
+```
+    "yiisoft/yii2-bootstrap": "~2.1.0"
+````
+
 Usage
 -----
 
