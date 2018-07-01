@@ -2,7 +2,7 @@
 /* @var $this \yii\web\View */
 /* @var $content string */
 
-use yii\bootstrap\Html;
+use yii\bootstrap4\Html;
 use yii\widgets\Breadcrumbs;
 use common\widgets\Alert;
 use johnsnook\sbadmin\SbAdminThemeAsset;
